@@ -1,4 +1,3 @@
-
 from flask import Flask, Response
 import requests
 import json
@@ -13,7 +12,7 @@ app = Flask(__name__)
 model_name = "amazon/chronos-t5-tiny"
  
 # define our endpoint
-@app.route("/inference/")
+@app.route("/inference/<string:token>")
 def get_inference(token):
     """Generate inference for given token."""
     try:
@@ -42,7 +41,7 @@ def get_inference(token):
     
     headers = {
         "accept": "application/json",
-        "x-cg-demo-api-key": "CG-xxxxxxxxxxxxxxxx" # replace with your API key
+        "x-cg-demo-api-key": "CG-xxxxxxxxxxxxxxxxxxx" # replace with your API key
     }
  
     response = requests.get(url, headers=headers)
