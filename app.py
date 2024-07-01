@@ -16,9 +16,6 @@ model_name = "amazon/chronos-t5-tiny"
 @app.route("/inference/")
 def get_inference(token):
     """Generate inference for given token."""
-    if not token or token != "BTC" or token != "SOL" or token != "ETH" or token != "BNB" or token != "ARB":
-        error_msg = "Token is required" if not token else "Token not supported"
-        return Response(json.dumps({"error": error_msg}), status=400, mimetype='application/json')
     try:
         # use a pipeline as a high-level helper
         pipeline = ChronosPipeline.from_pretrained(
