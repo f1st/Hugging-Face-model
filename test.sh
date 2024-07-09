@@ -116,7 +116,7 @@ sudo chmod -R 777 ./faceworker${CHOICE}/worker/data/worker
 
 echo -e "${BOLD}${DARK_YELLOW}Generation Worker Hugging face with topic ${CHOICE}"
 echo
-allocmd generate worker --name faceworker --topic ${CHOICE} --env dev
+allocmd generate worker --name faceworker${CHOICE} --topic ${CHOICE} --env dev
 echo
 
 echo -e "${BOLD}${DARK_YELLOW}WGET DEFAULT CODE:${RESET}"
