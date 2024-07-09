@@ -85,6 +85,11 @@ execute_with_prompt 'echo "export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin" >> 
 echo
 execute_with_prompt 'source $HOME/.bash_profile'
 echo
+execute_with_prompt 'echo "export PATH=$PATH:$(go env GOPATH)/bin" >> $HOME/.bash_profile'
+echo
+execute_with_prompt '.bash_profile'
+echo
+
 
 echo -e "${BOLD}${DARK_YELLOW}Checking go version...${RESET}"
 execute_with_prompt 'go version'
@@ -130,8 +135,8 @@ echo
 echo -e "${BOLD}${DARK_YELLOW}Export private key:${RESET}"
 allorad keys export faceworker${CHOICE} --keyring-backend test --unarmored-hex --unsafe
 echo
-
-printf 'Copy your hex and fill config: ... '
+wait
+printf '(COPY/PASTE) YOUR HEX_CODE_PK and FILL HERE: ... '
 read HEX
 
 sed -i "s/hex_coded_pk: ''/hex_coded_pk: $HEX/g" /root/faceworker${CHOICE}/worker/config.yaml
