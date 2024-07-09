@@ -85,10 +85,8 @@ execute_with_prompt 'echo "export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin" >> 
 echo
 execute_with_prompt 'source $HOME/.bash_profile'
 echo
-execute_with_prompt 'echo "export PATH=$PATH:$(go env GOPATH)/bin" >> $HOME/.bash_profile'
-echo
-execute_with_prompt 'source $HOME/.bash_profile'
-echo
+echo 'export PATH=$PATH:$(go env GOPATH)/bin' >> $HOME/.bash_profile
+source .bash_profile
 
 
 echo -e "${BOLD}${DARK_YELLOW}Checking go version...${RESET}"
