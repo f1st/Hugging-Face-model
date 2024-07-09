@@ -117,7 +117,6 @@ sudo chmod -R 777 ./faceworker${CHOICE}/worker/data/worker
 echo -e "${BOLD}${DARK_YELLOW}Generation Worker Hugging face with topic ${CHOICE}"
 echo
 allocmd generate worker --name faceworker --topic ${CHOICE} --env dev
-execute_with_prompt 'Y'
 echo
 
 echo -e "${BOLD}${DARK_YELLOW}WGET DEFAULT CODE:${RESET}"
@@ -130,18 +129,17 @@ echo
 
 echo -e "${BOLD}${DARK_YELLOW}Export private key:${RESET}"
 allorad keys export faceworker${CHOICE} --keyring-backend test --unarmored-hex --unsafe
-execute_with_prompt 'Y'
 echo
 
 printf 'Copy your hex and fill config: ... '
 read HEX
 
-sed -i -e "s|^hex_coded_pk *:.*|hex_coded_pk : ${HEX}|" /root/faceworker${CHOICE}/worker/config.toml
-sed -i -e "s|^boot_nodes *:.*|boot_nodes : /dns4/head-1-p2p.edgenet.allora.network/tcp/32081/p2p/12D3KooWCyao1YJ9DDZEAV8ZUZ1MLLKbcuxVNju1QkTVpanN9iku,/dns4/head-2-p2p.edgenet.allora.network/tcp/32082/p2p/12D3KooWKZYNUWBjnAvun6yc7EBnPvesX23e5F4HGkEk1p5Q7JfK,/dns4/head-0-p2p.edgenet.allora.network/tcp/32080/p2p/12D3KooWQgcJ4wiHBWE6H9FxZAVUn84ZAmywQdRk83op2EibWTiZ|" /root/faceworker${CHOICE}/worker/config.toml
+sed -i "s/hex_coded_pk: ''/hex_coded_pk: $HEX/g" /root/faceworker${CHOICE}/worker/config.yaml
+
+sed -i 's/boot_nodes: /boot_nodes: \/dns4\/head-1-p2p.edgenet.allora.network\/tcp\/32081\/p2p\/12D3KooWCyao1YJ9DDZEAV8ZUZ1MLLKbcuxVNju1QkTVpanN9iku,\/dns4\/head-2-p2p.edgenet.allora.network\/tcp\/32082\/p2p\/12D3KooWKZYNUWBjnAvun6yc7EBnPvesX23e5F4HGkEk1p5Q7JfK,/g' /root/faceworker${CHOICE}/worker/config.yaml
 
 cd /root/faceworker${CHOICE}/worker
 execute_with_prompt 'allocmd generate worker --env prod'
-execute_with_prompt 'y'
 execute_with_prompt 'chmod -R +rx ./data/scripts'
 
 echo -e "${BOLD}${UNDERLINE}${DARK_YELLOW}Generating prod-docker-compose.yml file...${RESET}"
@@ -192,7 +190,7 @@ services:
     ports:
       - "9010:9010"
     depends_on:
-      - init_faceworker3
+      - init_faceworker${CHOICE}
 EOF
 
 echo -e "${BOLD}${DARK_YELLOW}Generating prod-docker-compose.yml file generated successfully!${RESET}"
