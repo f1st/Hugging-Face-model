@@ -206,6 +206,13 @@ EOF
 echo -e "${BOLD}${DARK_YELLOW}Generating prod-docker-compose.yml file generated successfully!${RESET}"
 echo
 
+echo -e "${BOLD}${DARK_YELLOW}Faucet fund address worker:${RESET}"
+allocmd fund --address $(allorad keys  show faceworker${CHOICE} --bech val -a --keyring-backend test) --network edgenet
+allocmd fund --address $(allorad keys  show faceworker${CHOICE} --bech val -a --keyring-backend test) --network edgenet
+allocmd fund --address $(allorad keys  show faceworker${CHOICE} --bech val -a --keyring-backend test) --network edgenet
+echo
+wait
+
 echo -e "${BOLD}${UNDERLINE}${DARK_YELLOW}Building and starting Docker containers...${RESET}"
 docker compose -f prod-docker-compose.yaml up --build -d
 echo
