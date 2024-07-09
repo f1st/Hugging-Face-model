@@ -147,8 +147,13 @@ cd /root/faceworker${CHOICE}/worker
 execute_with_prompt 'allocmd generate worker --env prod'
 execute_with_prompt 'chmod -R +rx ./data/scripts'
 
+if [ -f prod-docker-compose.yaml ]; then
+    rm prod-docker-compose.yaml
+    echo "Removed existing prod-docker-compose.yaml file."
+fi
+
 echo -e "${BOLD}${UNDERLINE}${DARK_YELLOW}Generating prod-docker-compose.yml file...${RESET}"
-cat <<EOF > prod-docker-compose.yaml.yml
+cat <<EOF > prod-docker-compose.yaml
 version: "3.8"
 services:
   inference${CHOICE}:
