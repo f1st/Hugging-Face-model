@@ -87,7 +87,7 @@ execute_with_prompt 'source $HOME/.bash_profile'
 echo
 execute_with_prompt 'echo "export PATH=$PATH:$(go env GOPATH)/bin" >> $HOME/.bash_profile'
 echo
-execute_with_prompt '.bash_profile'
+execute_with_prompt 'source $HOME/.bash_profile'
 echo
 
 
