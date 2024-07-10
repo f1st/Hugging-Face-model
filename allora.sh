@@ -139,7 +139,7 @@ read HEX
 
 sed -i "s/hex_coded_pk: ''/hex_coded_pk: $HEX/g" /root/faceworker${CHOICE}/worker/config.yaml
 
-sed -i 's/boot_nodes: /boot_nodes: \/dns4\/head-1-p2p.edgenet.allora.network\/tcp\/32081\/p2p\/12D3KooWCyao1YJ9DDZEAV8ZUZ1MLLKbcuxVNju1QkTVpanN9iku,\/dns4\/head-2-p2p.edgenet.allora.network\/tcp\/32082\/p2p\/12D3KooWKZYNUWBjnAvun6yc7EBnPvesX23e5F4HGkEk1p5Q7JfK,/g' /root/faceworker${CHOICE}/worker/config.yaml
+#sed -i 's/boot_nodes: /boot_nodes: \/dns4\/head-1-p2p.edgenet.allora.network\/tcp\/32081\/p2p\/12D3KooWCyao1YJ9DDZEAV8ZUZ1MLLKbcuxVNju1QkTVpanN9iku,\/dns4\/head-2-p2p.edgenet.allora.network\/tcp\/32082\/p2p\/12D3KooWKZYNUWBjnAvun6yc7EBnPvesX23e5F4HGkEk1p5Q7JfK,/g' /root/faceworker${CHOICE}/worker/config.yaml
 
 cd /root/faceworker${CHOICE}/worker
 execute_with_prompt 'allocmd generate worker --env prod'
@@ -183,7 +183,7 @@ services:
       - --private-key=/data/worker/key/priv.bin
       - --log-level=debug
       - --port=9010
-      - --boot-nodes=/dns4/head-1-p2p.edgenet.allora.network/tcp/32081/p2p/12D3KooWCyao1YJ9DDZEAV8ZUZ1MLLKbcuxVNju1QkTVpanN9iku,/dns4/head-2-p2p.edgenet.allora.network/tcp/32082/p2p/12D3KooWKZYNUWBjnAvun6yc7EBnPvesX23e5F4HGkEk1p5Q7JfK,/dns4/head-0-p2p.edgenet.allora.network/tcp/32080/p2p/12D3KooWQgcJ4wiHBWE6H9FxZAVUn84ZAmywQdRk83op2EibWTiZ
+      - --boot-nodes=/dns4/head-0-p2p.edgenet.allora.network/tcp/32080/p2p/12D3KooWQgcJ4wiHBWE6H9FxZAVUn84ZAmywQdRk83op2EibWTiZ,/dns4/head-1-p2p.edgenet.allora.network/tcp/32081/p2p/12D3KooWCyao1YJ9DDZEAV8ZUZ1MLLKbcuxVNju1QkTVpanN9iku,/dns4/head-2-p2p.edgenet.allora.network/tcp/32082/p2p/12D3KooWKZYNUWBjnAvun6yc7EBnPvesX23e5F4HGkEk1p5Q7JfK
       - --topic=allora-topic-${CHOICE}-worker
       - --allora-node-rpc-address=https://allora-rpc.edgenet.allora.network/
       - --allora-chain-home-dir=/data/.allorad
