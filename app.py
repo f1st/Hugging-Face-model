@@ -9,7 +9,7 @@ from chronos import ChronosPipeline
 app = Flask(__name__)
  
 # define the Hugging Face model we will use
-model_name = "amazon/chronos-t5-tiny"
+model_name = "amazon/chronos-t5-mini"
  
 # define our endpoint
 @app.route("/inference/<string:token>")
@@ -19,7 +19,7 @@ def get_inference(token):
         # use a pipeline as a high-level helper
         pipeline = ChronosPipeline.from_pretrained(
             model_name,
-            device_map="auto",
+            device_map="cpu",
             torch_dtype=torch.bfloat16,
         )
     except Exception as e:
