@@ -1,24 +1,24 @@
 #!/bin/bash
 
-T1=`cat /huggingmodel1/worker/config.yaml`
+T1=`cat huggingmodel1/worker/config.yaml`
 wait
 
-T2=`cat /huggingmodel2/worker/config.yaml`
+T2=`cat huggingmodel2/worker/config.yaml`
 wait
 
-T3=`cat /huggingmodel3/worker/config.yaml`
+T3=`cat huggingmodel3/worker/config.yaml`
 wait
 
-T4=`cat /huggingmodel4/worker/config.yaml`
+T4=`cat huggingmodel4/worker/config.yaml`
 wait
 
-T5=`cat /huggingmodel5/worker/config.yaml`
+T5=`cat huggingmodel5/worker/config.yaml`
 wait
 
-T6=`cat /huggingmodel6/worker/config.yaml`
+T6=`cat huggingmodel6/worker/config.yaml`
 wait
 
-T7=`cat /huggingmodel7/worker/config.yaml`
+T7=`cat huggingmodel7/worker/config.yaml`
 wait
 
  curl -G -Ss \
