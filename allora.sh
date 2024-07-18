@@ -138,7 +138,7 @@ read HEX
 sed -i "s/hex_coded_pk: ''/hex_coded_pk: $HEX/g" /root/huggingmodel${CHOICE}/worker/config.yaml
 
 cd /root/huggingmodel${CHOICE}/worker
-execute_with_prompt 'allocmd generate worker --env prod'
+execute_with_prompt 'allocmd generate worker --env prod --network allora-testnet-1'
 execute_with_prompt 'chmod -R +rx ./data/scripts'
 
 if [ -f prod-docker-compose.yaml ]; then
