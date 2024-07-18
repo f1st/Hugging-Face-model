@@ -204,9 +204,11 @@ echo -e "${BOLD}${DARK_YELLOW}Generating prod-docker-compose.yml file generated 
 echo
 
 echo -e "${BOLD}${DARK_YELLOW}Faucet fund address worker:${RESET}"
-allocmd fund --address $(allorad keys  show huggingmodel${CHOICE} -a --keyring-backend test) --network allora-testnet-1-faucet
-allocmd fund --address $(allorad keys  show huggingmodel${CHOICE} -a --keyring-backend test) --network allora-testnet-1-faucet
-allocmd fund --address $(allorad keys  show huggingmodel${CHOICE} -a --keyring-backend test) --network allora-testnet-1-faucet
+curl -L https://faucet.testnet-1.testnet.allora.network/send/allora-testnet-1/$(allorad keys  show huggingmodel${CHOICE} -a --keyring-backend test)
+sleep 5
+curl -L https://faucet.testnet-1.testnet.allora.network/send/allora-testnet-1/$(allorad keys  show huggingmodel${CHOICE} -a --keyring-backend test)
+sleep 5
+curl -L https://faucet.testnet-1.testnet.allora.network/send/allora-testnet-1/$(allorad keys  show huggingmodel${CHOICE} -a --keyring-backend test)
 echo
 wait
 
