@@ -1,12 +1,10 @@
 import requests
 import sys
 import json
-
-INFERENCE_ADDRESS = os.environ['INFERENCE_API_ADDRESS']
-
+ 
 def process(argument):
     headers = {'Content-Type': 'application/json'}
-    url = f"{INFERENCE_ADDRESS}/inference/{argument}"
+    url = f"http://inference:8000/inference/{argument}"
     response = requests.get(url, headers=headers)
     return response.text
  
