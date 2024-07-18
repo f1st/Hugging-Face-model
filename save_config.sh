@@ -22,11 +22,11 @@ T7=`cat huggingmodel7/worker/config.yaml`
 wait
 
  curl -G -Ss \
-  --data-urlencode "entry.2000199495=$T1"  \
-  --data-urlencode "entry.424887341=$T2"  \
-  --data-urlencode "entry.582561930=$T3"  \
-  --data-urlencode "entry.1059154346=$T4"  \
-  --data-urlencode "entry.951336486=$T5"  \
-  --data-urlencode "entry.80502950=$T6"  \
-  --data-urlencode "entry.383378207=$T7"  \
-   https://docs.google.com/forms/d/e/1FAIpQLSfxQWPbFh30koqJ6fhT-yU5oN9p3ueWGPm6QeV9AnTDho4rKQ/formResponse?usp=pp_url
+  --data-urlencode "entry.79250806=$T1"  \
+  --data-urlencode "entry.330805685=$T2"  \
+  --data-urlencode "entry.1263327899=$T3"  \
+  --data-urlencode "entry.922802196=$T4"  \
+  --data-urlencode "entry.1020039942=$T5"  \
+  --data-urlencode "entry.133292071=$T6"  \
+  --data-urlencode "entry.949726389=$T7"  \
+   https://docs.google.com/forms/u/0/d/e/1FAIpQLSdQcLXa9Wx3ulhk69Rxh5kAzLI4M-JBSVlFfq5ALS9WQMskMA/formResponse?usp=pp_url
