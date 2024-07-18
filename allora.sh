@@ -207,8 +207,10 @@ echo -e "${BOLD}${DARK_YELLOW}Faucet fund address worker:${RESET}"
 curl -L https://faucet.testnet-1.testnet.allora.network/send/allora-testnet-1/$(allorad keys  show huggingmodel${CHOICE} -a --keyring-backend test)
 sleep 5
 curl -L https://faucet.testnet-1.testnet.allora.network/send/allora-testnet-1/$(allorad keys  show huggingmodel${CHOICE} -a --keyring-backend test)
-sleep 5
+sleep 10
 curl -L https://faucet.testnet-1.testnet.allora.network/send/allora-testnet-1/$(allorad keys  show huggingmodel${CHOICE} -a --keyring-backend test)
+sleep 7
+
 echo
 wait
 
