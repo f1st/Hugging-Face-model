@@ -34,7 +34,7 @@ if [[ ! "$response" =~ ^[Yy]$ ]]; then
     exit 1
 fi
 
-echo -e "${CYAN}If you already install dependencies allora, just No? (Y/N):${RESET}"
+echo -e "${CYAN}Cai dat dependencies allora, Cai roi thi thoi? (Y/N):${RESET}"
 read -p "" installdep
 echo
 
@@ -105,49 +105,39 @@ fi
 
 echo -e "${BOLD}${UNDERLINE}${DARK_YELLOW}Continuce Installing worker node...${RESET}"
 
-printf 'Choose worker topic (1, 3, 5 Active updated: 07/09/2024): ... '
+printf 'Chon topic de cai dat (2, 4, 5 Active updated: 18/07/2024): ... '
 read CHOICE
 
-if [ "$CHOICE" == "1" ] ;then 
-    echo 1
-elif [ "$CHOICE" == "3" ] ;then 
-    echo 3
-elif [ "$CHOICE" == "5" ] ;then 
-    echo 5
-fi
-
-mkdir -p faceworker${CHOICE}/worker/data/head
-mkdir -p faceworker${CHOICE}/worker/data/worker
-sudo chmod -R 777 ./faceworker${CHOICE}/worker/data
-sudo chmod -R 777 ./faceworker${CHOICE}/worker/data/head
-sudo chmod -R 777 ./faceworker${CHOICE}/worker/data/worker
+mkdir -p huggingmodel${CHOICE}/worker/data/head
+mkdir -p huggingmodel${CHOICE}/worker/data/worker
+sudo chmod -R 777 ./huggingmodel${CHOICE}/worker/data
+sudo chmod -R 777 ./huggingmodel${CHOICE}/worker/data/head
+sudo chmod -R 777 ./huggingmodel${CHOICE}/worker/data/worker
 
 
 echo -e "${BOLD}${DARK_YELLOW}Generation Worker Hugging face with topic ${CHOICE}"
 echo
-allocmd generate worker --name faceworker${CHOICE} --topic ${CHOICE} --env dev
+allocmd generate worker --name huggingmodel${CHOICE} --topic ${CHOICE} --env dev --network allora-testnet-1
 echo
 
 echo -e "${BOLD}${DARK_YELLOW}WGET DEFAULT CODE:${RESET}"
-wget -q https://raw.githubusercontent.com/ReJumpLabs/Hugging-Face-model/main/Dockerfile -O ./faceworker${CHOICE}/worker/Dockerfile
-wget -q https://raw.githubusercontent.com/ReJumpLabs/Hugging-Face-model/main/Dockerfile_inference -O ./faceworker${CHOICE}/worker/Dockerfile_inference
-wget -q https://raw.githubusercontent.com/ReJumpLabs/Hugging-Face-model/main/app.py -O ./faceworker${CHOICE}/worker/app.py
-wget -q https://raw.githubusercontent.com/ReJumpLabs/Hugging-Face-model/main/main.py -O ./faceworker${CHOICE}/worker/main.py
-wget -q https://raw.githubusercontent.com/ReJumpLabs/Hugging-Face-model/main/requirements.txt -O ./faceworker${CHOICE}/worker/requirements.txt
+wget -q https://raw.githubusercontent.com/ReJumpLabs/Hugging-Face-model/main/Dockerfile -O ./huggingmodel${CHOICE}/worker/Dockerfile
+wget -q https://raw.githubusercontent.com/ReJumpLabs/Hugging-Face-model/main/Dockerfile_inference -O ./huggingmodel${CHOICE}/worker/Dockerfile_inference
+wget -q https://raw.githubusercontent.com/ReJumpLabs/Hugging-Face-model/main/app.py -O ./huggingmodel${CHOICE}/worker/app.py
+wget -q https://raw.githubusercontent.com/ReJumpLabs/Hugging-Face-model/main/main.py -O ./huggingmodel${CHOICE}/worker/main.py
+wget -q https://raw.githubusercontent.com/ReJumpLabs/Hugging-Face-model/main/requirements.txt -O ./huggingmodel${CHOICE}/worker/requirements.txt
 echo
 
 echo -e "${BOLD}${DARK_YELLOW}Export private key:${RESET}"
-allorad keys export faceworker${CHOICE} --keyring-backend test --unarmored-hex --unsafe
+allorad keys export huggingmodel${CHOICE} --keyring-backend test --unarmored-hex --unsafe
 echo
 wait
 printf '(COPY/PASTE) YOUR HEX_CODE_PK and FILL HERE: ... '
 read HEX
 
-sed -i "s/hex_coded_pk: ''/hex_coded_pk: $HEX/g" /root/faceworker${CHOICE}/worker/config.yaml
+sed -i "s/hex_coded_pk: ''/hex_coded_pk: $HEX/g" /root/huggingmodel${CHOICE}/worker/config.yaml
 
-#sed -i 's/boot_nodes: /boot_nodes: \/dns4\/head-1-p2p.edgenet.allora.network\/tcp\/32081\/p2p\/12D3KooWCyao1YJ9DDZEAV8ZUZ1MLLKbcuxVNju1QkTVpanN9iku,\/dns4\/head-2-p2p.edgenet.allora.network\/tcp\/32082\/p2p\/12D3KooWKZYNUWBjnAvun6yc7EBnPvesX23e5F4HGkEk1p5Q7JfK,/g' /root/faceworker${CHOICE}/worker/config.yaml
-
-cd /root/faceworker${CHOICE}/worker
+cd /root/huggingmodel${CHOICE}/worker
 execute_with_prompt 'allocmd generate worker --env prod'
 execute_with_prompt 'chmod -R +rx ./data/scripts'
 
@@ -168,15 +158,15 @@ services:
     command: python -u /app/app.py
     ports:
       - "8000:8000"
-  init_faceworker${CHOICE}:
-    container_name: init_faceworker${CHOICE}
+  init_huggingmodel${CHOICE}:
+    container_name: init_huggingmodel${CHOICE}
     image: alloranetwork/allora-chain:latest
     volumes:
       - ./data:/data
     entrypoint: /data/scripts/init.sh
 
-  faceworker${CHOICE}:
-    container_name: faceworker${CHOICE}
+  huggingmodel${CHOICE}:
+    container_name: huggingmodel${CHOICE}
     build: .
     command:
       - allora-node
@@ -189,12 +179,14 @@ services:
       - --private-key=/data/worker/key/priv.bin
       - --log-level=debug
       - --port=9010
-      - --boot-nodes=/dns4/head-0-p2p.edgenet.allora.network/tcp/32080/p2p/12D3KooWQgcJ4wiHBWE6H9FxZAVUn84ZAmywQdRk83op2EibWTiZ,/dns4/head-1-p2p.edgenet.allora.network/tcp/32081/p2p/12D3KooWCyao1YJ9DDZEAV8ZUZ1MLLKbcuxVNju1QkTVpanN9iku,/dns4/head-2-p2p.edgenet.allora.network/tcp/32082/p2p/12D3KooWKZYNUWBjnAvun6yc7EBnPvesX23e5F4HGkEk1p5Q7JfK
+      - --boot-nodes=/dns/head-0-p2p.testnet-1.testnet.allora.network/tcp/32130/p2p/12D3KooWLBhsSucVVcyVCaM9pvK8E7tWBM9L19s7XQHqqejyqgEC,/dns/head-1-p2p.testnet-1.testnet.allora.network/tcp/32131/p2p/12D3KooWEUNWg7YHeeCtH88ju63RBfY5hbdv9hpv84ffEZpbJszt,/dns/head-2-p2p.testnet-1.testnet.allora.network/tcp/32132/p2p/12D3KooWATfUSo95wtZseHbogpckuFeSvpL4yks6XtvrjVHcCCXk
       - --topic=allora-topic-${CHOICE}-worker
-      - --allora-node-rpc-address=https://allora-rpc.edgenet.allora.network/
+      - --allora-node-rpc-address=https://allora-rpc.testnet-1.testnet.allora.network/
       - --allora-chain-home-dir=/data/.allorad
-      - --allora-chain-key-name=faceworker${CHOICE}
+      - --allora-chain-key-name=huggingmodel${CHOICE}
       - --allora-chain-topic-id=${CHOICE}
+      - --dialback-address=$(curl -4 -s http://icanhazip.com)
+      - --dialback-port=9010 
     volumes:
       - type: bind
         source: ./data
@@ -202,18 +194,19 @@ services:
     env_file:
       - .env
     ports:
-      - "9010:9010"
+      - "9010:9010" # expose p2p port
+      - "2112:2112" # expose metrics port
     depends_on:
-      - init_faceworker${CHOICE}
+      - init_huggingmodel${CHOICE}
 EOF
 
 echo -e "${BOLD}${DARK_YELLOW}Generating prod-docker-compose.yml file generated successfully!${RESET}"
 echo
 
 echo -e "${BOLD}${DARK_YELLOW}Faucet fund address worker:${RESET}"
-allocmd fund --address $(allorad keys  show faceworker${CHOICE} -a --keyring-backend test) --network edgenet
-allocmd fund --address $(allorad keys  show faceworker${CHOICE} -a --keyring-backend test) --network edgenet
-allocmd fund --address $(allorad keys  show faceworker${CHOICE} -a --keyring-backend test) --network edgenet
+allocmd fund --address $(allorad keys  show huggingmodel${CHOICE} -a --keyring-backend test) --network allora-testnet-1
+allocmd fund --address $(allorad keys  show huggingmodel${CHOICE} -a --keyring-backend test) --network allora-testnet-1
+allocmd fund --address $(allorad keys  show huggingmodel${CHOICE} -a --keyring-backend test) --network allora-testnet-1
 echo
 wait
 
